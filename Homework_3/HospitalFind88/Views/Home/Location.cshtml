@@ -1,0 +1,207 @@
+﻿@model HospitalFind88.Models.Locations
+@{
+    ViewBag.Title = "Location Page";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Location</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCToJEFBYhjuNMcWZF1QqSnLS4seLvOMQ4"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/scripts/bootstrap.min.js"></script>
+    <script src="~/scripts/jquery.validate.min.js"></script>
+    <script src="~/scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript">
+
+        var markers = @Html.Raw(ViewBag.Markers);
+        window.onload = function () {
+            var mapOptions = {
+                center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+                zoom: 13,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var infoWindow = new google.maps.InfoWindow();
+            var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+            for (i = 0; i < markers.length; i++) {
+                var data = markers[i]
+                var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+                var marker = new google.maps.Marker({
+                    position: myLatlng,
+                    map: map,
+                    title: data.title,
+                    web: data.web,
+                    emergency: data.emergency,
+                    phone: data.phone,
+                    str: data.str,
+                    pc: data.pc
+                });
+                (function (marker, data) {
+                    google.maps.event.addListener(marker, "click", function (e) {
+                        infoWindow.setContent(data.description);
+                        infoWindow.open(map, marker);
+                    });
+                })(marker, data);
+            }
+        }
+
+
+    </script>
+</head>
+<body>
+    @using (Html.BeginForm("Location", "Home", FormMethod.Post))
+    {
+        <div class="container py-4">
+            <div class="card">
+                    <h3>Hospital Locations</h3>
+
+                <div class="card-body" style="width: 650px; position:absolute; margin-top: 100px">
+
+                    @* <button style="margin-bottom:10px;" type="button" data-target="#myMap" data-toggle="modal" class="btn btn-danger btn-sm rounded-0"><i class="fa fa-plus-circle"></i> Add New Location</button>*@
+
+                    <div class="modal fade" id="myMap">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add New Location</h4>
+                                    <button type="button" class="close" data-dismiss="modal">×</button>
+                                </div>
+                                <div class="modal-body" style="width:650px">
+                                    <div class="row">
+                                        <div class="col-sm-4 col-md-4 col-xs-12">
+                                            <div class="form-group">
+                                                <label>Hospital Name:</label>
+                                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-xs-12">
+                                            <div class="form-group">
+                                                <label>Latitude:</label>
+                                                @Html.EditorFor(model => model.Latitude, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Latitude, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-xs-12">
+                                            <div class="form-group">
+                                                <label>Longitude:</label>
+                                                @Html.EditorFor(model => model.Longitude, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Longitude, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-md-4 col-xs-12">
+                                            <div class="form-group">
+                                                <label>Emergency:</label>
+                                                @Html.EditorFor(model => model.Emergency, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Emergency, "", new { @class = "text-danger" })
+
+                                                <label>Website:</label>
+                                                @Html.EditorFor(model => model.Website, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Website, "", new { @class = "text-danger" })
+
+                                                <label>Phone:</label>
+                                                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+
+                                                <label>Street:</label>
+                                                @Html.EditorFor(model => model.Street, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Street, "", new { @class = "text-danger" })
+
+                                                <label>Postcode:</label>
+                                                @Html.EditorFor(model => model.Postcode, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.Postcode, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger rounded-0" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary rounded-0">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="dvMap" class="card" style="width: 610px; height: 400px; position: relative">
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+    <div>
+
+        <div style="width:300px; margin-left:800px; margin-top: 200px">
+            <button id="Tables" class="float-left submit-button" style="font-size:14px; margin-top:5px;">Покажи информации за болници во табела</button>
+
+            <script type="text/javascript">
+                document.getElementById("Tables").onclick = function () {
+                    location.href = "/Hospitals/Index";
+                };
+            </script>
+            <button id="Home" class="float-left submit-button" style="font-size:14px; margin-top:5px;">Дома</button>
+
+            <script type="text/javascript">
+                document.getElementById("Home").onclick = function () {
+                    location.href = "/Home/Index";
+                };
+            </script>
+            <h3>Изберете болница</h3>
+
+            <select id="mySelect" style="margin-top:10px; margin-bottom:10px;" onchange="myFunction()">
+                <option value="0">Поликлиника Јане Сандански</option>
+                <option value="1">Мајчин Дом</option>
+                <option value="2">Ординација Срце</option>
+                <option value="3">Центар за Јавно Здравје  Пролет</option>
+                <option value="4">Асклепиос-интерна медицина со кардиологија</option>
+                <option value="5">Мегамед + Радио Дијагностика</option>
+                <option value="6">ТТ Медика</option>
+                <option value="7">Поликлиника Медикус</option>
+            </select>
+
+            <p id="demo"></p>
+
+            <script>
+                function myFunction() {
+                    var x = document.getElementById("mySelect").value;
+
+                    if (x == 0) {
+                        document.getElementById("demo").innerHTML = "Име: Поликлиника Јане Сандански" + '<br/>' + "Брза Помош: Да" + '<br />' + "Вебсајт: / " + '<br />' + "Телефонски број: 02 246 9622" + '<br />' + "Улица: Ангел Димовски, 1000";
+                    }
+                    else if (x == 1) {
+                        document.getElementById("demo").innerHTML = "Име: Мајчин Дом" + '<br />' + "Брза Помош: Не" + '<br />' + "Вебсајт: " + '<br />' + "Телефонски број: 02 246 2636" + '<br />' + "Улица: Булевар АСНОМ, 1000";
+                    }
+                    else if (x == 2) {
+                        document.getElementById("demo").innerHTML = "Име: Ординација Срце " + '<br />' + "Брза Помош: Не" + '<br />' + "Вебсајт: www.srce.com.mk " + '<br />' + "Телефонски број: 02 321 7016" + '<br />' + "Улица: Булевар Трета Македонска бригада, 1000";
+                    }
+                    else if (x == 3) {
+                        document.getElementById("demo").innerHTML = "Име: Центар за Јавно Здравје  Пролет" + '<br/>' + "Брза Помош: Да" + '<br />' + "Вебсајт: www.cph.mk " + '<br />' + "Телефонски број: 02 329 8488" + '<br />' + "Улица: Булевар Трета Македонска бригада, 1000";
+                    }
+                    else if (x == 4) {
+                        document.getElementById("demo").innerHTML = "Име: Асклепиос-интерна медицина со кардиологија" + '<br/>' + "Брза Помош: Не" + '<br />' + "Вебсајт: www.asklepios.mk " + '<br />' + "Телефонски број: 02 240 0004" + '<br />' + "Улица: Видое Смилевски Бато, 1000";
+                    }
+                    else if (x == 5) {
+                        document.getElementById("demo").innerHTML = "Име: Мегамед + Радио Дијагностика" + '<br/>' + "Брза Помош: Не" + '<br />' + "Вебсајт: www.megamed.com.mk " + '<br />' + "Телефонски број: 02 224 6001" + '<br />' + "Улица: Булевар Јане Сандански, 1000";
+                    }
+                    else if (x == 6) {
+                        document.getElementById("demo").innerHTML = "Име: ТТ Медика" + '<br/>' + "Брза Помош: Не" + '<br />' + "Вебсајт: / " + '<br />' + "Телефонски број: 078 401 353" + '<br />' + "Улица: Васко Карангелески, 1000";
+                    }
+                    else if (x == 7) {
+                        document.getElementById("demo").innerHTML = "Име: Поликлиника Медикус " + '<br/>' + "Брза Помош: Не" + '<br />' + "Вебсајт: / " + '<br />' + "Телефонски број: 075 236 310" + '<br />' + "Улица: Вангел Тодоровски, 1000";
+                    }
+                }
+            </script>
+
+        </div>
+    </div>
+</body>
+</html>
+
+
+
