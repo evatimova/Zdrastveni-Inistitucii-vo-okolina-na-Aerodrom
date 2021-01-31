@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="hospitalfind88" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Mladenovski\\source\\repos\\HospitalFind88\\HospitalFind88\\obj\\Debug\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Mladenovski\\source\\repos\\HospitalFind88\\HospitalFind88\\obj\\Debug\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="Add write permission to App_Data Folder" description="Add write permission to App_Data folder" value="hospitalfind88/App_Data" tags="Hidden">
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Mladenovski\\source\\repos\\HospitalFind88\\HospitalFind88\\obj\\Debug\\Package\\PackageTmp\\App_Data$" />
+  </parameter>
+  <parameter name="DBCS-Web.config Connection String" description="" value="Data Source=metoserver.database.windows.net;Initial Catalog=DefaultConnection;Persist Security Info=True;User ID=meto;Password=mada_faka8" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Mladenovski\\source\\repos\\HospitalFind88\\HospitalFind88\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DBCS']/@connectionString" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=metoserver.database.windows.net;Initial Catalog=DefaultConnection;Persist Security Info=True;User ID=meto;Password=mada_faka8" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Mladenovski\\source\\repos\\HospitalFind88\\HospitalFind88\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+</parameters>
