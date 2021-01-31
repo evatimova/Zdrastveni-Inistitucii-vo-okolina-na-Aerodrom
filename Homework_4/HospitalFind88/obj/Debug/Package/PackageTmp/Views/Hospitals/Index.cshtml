@@ -1,0 +1,96 @@
+﻿@model IEnumerable<HospitalFind88.Models.Hospitals>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+
+<body>
+    <button id="Hospitals" class="float-left submit-button" style="font-size:14px; margin-top:50px">Покажи болници на мапа</button>
+
+    <script type="text/javascript">
+        document.getElementById("Hospitals").onclick = function () {
+            location.href = "/Home/Location";
+        };
+    </script>
+
+    <br />
+
+    <button id="Home" class="float-left submit-button" style="font-size:14px; margin-top:5px;">Дома</button>
+
+    <script type="text/javascript">
+        document.getElementById("Home").onclick = function () {
+            location.href = "/Home/Index";
+        };
+    </script>
+
+    <table id="table" cellpadding="5" border="1" style="margin-top:50px; width:100%; border-collapse:collapse">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Latitude)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Longitude)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Emergency)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Website)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Street)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Postcode)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Latitude)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Longitude)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Emergency)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Website)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Street)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Postcode)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
